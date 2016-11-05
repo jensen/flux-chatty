@@ -8,11 +8,10 @@ new WebpackDevServer(webpack(config), {
       aggregateTimeout: 300,
       poll: 1000
     }
-  }).listen(3000, '0.0.0.0', function (err, result) {
+  }).listen(3000, '0.0.0.0', function (err/*, result */) {
     if (err) {
       console.log(err);
     }
 
     console.log('Running at http://0.0.0.0:3000');
-    console.log(result);
   });
