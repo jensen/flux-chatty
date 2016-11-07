@@ -1,33 +1,20 @@
+import Listener from '../utilities/listener.js'
+
 import Dispatcher from './dispatcher.js'
 
 import {ACTION_CHAT_POST_MESSAGE, ACTION_CHAT_CHANGE_USERNAME} from './constants.js'
 
-class ChatStore {
+class ChatStore extends Listener {
 
-  constructor(){
-    this.listeners = {};
+  constructor() {
+    super();
 
     this.data = {
       username: '',
       messages: []
     };
 
-    Dispatcher.addListener(this.onActionDispatch.bind(this));
-  }
-
-  addEventListener(cb) {
-    this.listeners[ChatStore.listenerId] = cb;
-    return ChatStore.listenerId++;
-  }
-
-  removeEventListener(id) {
-    delete this.listeners[id];
-  }
-
-  emitEvent() {
-    for(let listener in this.listeners) {
-      this.listeners[listener]();
-    }
+    Dispatcher.addEventListener(this.onActionDispatch.bind(this));
   }
 
   onActionDispatch(action) {
@@ -55,7 +42,5 @@ class ChatStore {
     return this.data;
   }
 }
-
-ChatStore.listenerId = 0;
 
 export default ChatStore;

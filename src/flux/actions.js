@@ -21,13 +21,13 @@ class ChatActions {
   constructor() {}
 
   static postMessage(message) {
-    Dispatcher.dispatch(new Action(ACTION_CHAT_POST_MESSAGE, {
+    Dispatcher.emitEvent(new Action(ACTION_CHAT_POST_MESSAGE, {
       message: message
     }));
   }
 
   static changeUsername(username) {
-    Dispatcher.dispatch(new Action(ACTION_CHAT_CHANGE_USERNAME, {
+    Dispatcher.emitEvent(new Action(ACTION_CHAT_CHANGE_USERNAME, {
       username: username
     }));
   }

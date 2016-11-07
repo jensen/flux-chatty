@@ -1,15 +1,3 @@
-class Dispatcher {
-  constructor() {
-    this.listeners = [];
-  }
+import Listener from '../utilities/listener.js'
 
-  addListener(cb) {
-    this.listeners.push(cb);
-  }
-
-  dispatch(action) {
-    this.listeners.forEach((cb) => cb(action));
-  }
-}
-
-export default new Dispatcher();
+export default new Listener();
