@@ -1,18 +1,29 @@
 import React, {Component} from 'react';
 
-import MessageList from './components/MessageList.jsx'
-import ChatBar from './components/ChatBar.jsx'
+import MessageList from './components/MessageList.jsx';
+import ChatBar from './components/ChatBar.jsx';
+
+import ChatStore from './flux/store.js';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      'username': 'Bob',
-      'messages': [
-        { 'username': 'Anonymous', 'content': 'Here is a sample message.'}
-      ]
-    }
+    this.store = new ChatStore();
+    this.state = this.store.get();
+  }
+
+  componentDidMount() {
+    this.listener = this.store.addEventListener(this.onStoreUpdate.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.store.removeEventListener(this.listener);
+  }
+
+  onStoreUpdate() {
+    this.setState(this.store.get());
   }
 
   render() {

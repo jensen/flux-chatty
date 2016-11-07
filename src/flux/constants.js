@@ -1,0 +1,2 @@
+export const ACTION_CHAT_POST_MESSAGE = 0;
+export const ACTION_CHAT_CHANGE_USERNAME = 1;

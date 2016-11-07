@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+import {ChatActions} from '../flux/actions.js'
+
 class ChatBar extends Component {
   constructor(props) {
     super(props);
@@ -8,6 +10,11 @@ class ChatBar extends Component {
       'username': props.username,
       'message': ''
     }
+
+    this.onUsernameKey = this.onUsernameKey.bind(this);
+    this.onMessageKey = this.onMessageKey.bind(this);
+    this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onMessageChange = this.onMessageChange.bind(this);
   }
 
   onUsernameChange(event) {
@@ -18,6 +25,19 @@ class ChatBar extends Component {
     this.setState({ 'message': event.target.value });
   }
 
+  onUsernameKey(event) {
+    if(event.key === 'Enter' || event.key === 'Tab') {
+      ChatActions.changeUsername(this.state.username)
+    }
+  }
+
+  onMessageKey(event) {
+    if(event.key === 'Enter') {
+      ChatActions.postMessage(this.state.message);
+      this.setState({ 'message': '' });
+    }
+  }
+
   render() {
     return (
       <footer>
@@ -25,13 +45,15 @@ class ChatBar extends Component {
           id="username"
           placeholder="Your Name (Optional)"
           value={ this.state.username }
-          onChange={ this.onUsernameChange.bind(this) } />
+          onKeyDown={ this.onUsernameKey }
+          onChange={ this.onUsernameChange } />
 
         <input type="text"
           id="new-message"
           placeholder="Type a message and hit ENTER"
           value={ this.state.message }
-          onChange={ this.onMessageChange.bind(this) } />
+          onKeyDown={ this.onMessageKey }
+          onChange={ this.onMessageChange } />
       </footer>
     );
   }
