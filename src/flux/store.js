@@ -15,26 +15,23 @@ class ChatStore extends Listener {
     };
 
     Dispatcher.addEventListener(this.onActionDispatch.bind(this));
+
+    this.actions = {};
+    this.actions[ACTION_CHAT_POST_MESSAGE] = this.postMessage.bind(this);
+    this.actions[ACTION_CHAT_CHANGE_USERNAME] = this.changeUserName.bind(this);
   }
 
   onActionDispatch(action) {
-      switch(action.getType()) {
-      case ACTION_CHAT_POST_MESSAGE:
-        this.postMessage(action.getData().message);
-        break;
-      case ACTION_CHAT_CHANGE_USERNAME:
-        this.changeUserName(action.getData().username);
-        break;
-    }
+      this.actions[action.type](action.payload);
   }
 
-  postMessage(message) {
-    this.data.messages.push({ username: this.data.username, content: message});
+  postMessage(payload) {
+    this.data.messages.push({ username: this.data.username, content: payload.message});
     this.emitEvent();
   }
 
-  changeUserName(username) {
-    this.data.username = username;
+  changeUserName(payload) {
+    this.data.username = payload.username;
     this.emitEvent();
   }
 
