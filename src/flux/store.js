@@ -22,7 +22,7 @@ class ChatStore extends Listener {
   }
 
   onActionDispatch(action) {
-      this.actions[action.type](action.payload);
+    this.actions[action.type](action.payload);
   }
 
   postMessage(payload) {
